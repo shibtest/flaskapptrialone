@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'flaskapptrialone'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_90CF1E82C08C41EDAFEF3BCBE312B76A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DC18A15E8385414184E15740940EC2F9 }}
