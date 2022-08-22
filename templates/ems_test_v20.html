@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+
+    <title>Flask App </title>
+
+    <!-- Bootstraps Java Scipts Links -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+    <!-- JQuery links  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <!--High CHART LIVE  -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+    <!--Gauge  -->
+    <script type="text/javascript" src="http://pubnub.github.io/eon/lib/eon.js"></script>
+
+    <!--datepicker -->
+    
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="home">
+        <div class="column left">
+            <div class="parameters">
+
+                <div class="sensordatas">
+        
+                    <div class="datasets">
+                        <h1 class="sensor1"> Voltage : </h1>
+                    </div>
+                    <br>
+        
+                    <div class="datasets">
+                        <h1 class="sensor2">Current :</h1>
+                    </div>
+                    <br>
+                    <div class="datasets">
+                        <h1 class="sensor3">Frequency :</h1>
+                    </div>
+                    <br>
+                    <div class="datasets">
+                        <h1 class="sensor4">Total harmonic distortion :</h1>
+                    </div>
+                    <br>
+                    <div class="datasets">
+                        <h1 class="sensor5">Apparent energy :</h1>
+                    </div>
+                    <br>
+                    <div class="datasets">
+                        <h1 class="sensor6">Power factor :</h1>
+                    </div>
+                    <br>
+                    <div class="datasets">
+                        <h1 class="sensor7">Energy :</h1>
+                    </div>
+                    <br>
+                    <div class="datasets">
+                        <h1 class="sensor8">Power :</h1>
+                    </div>
+                    <br>
+
+                    <div class="datasets">
+                        <h1 class="sensor9">Apparent power :</h1>
+                    </div>
+                    <br>                  
+                </div>
+                <div class="meter_info">
+                    <div class="datasets">
+                        <h1 class="sensor10">Meter ID :</h1>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="datasets">
+                        <h1 class="sensor11">Meter location :</h1>
+                    </div>
+                </div>
+                <div class="energy_meter">
+                    <div class="calculation">
+                        <a href="/calculate">Energy Consumption of previous day:</a><input type="number" id="t1" value="{{ data1 }}" disabled>
+                        Total production of Previous Day:<input type="number" id="t2"><br>
+                        <input type="button" onclick="calcTotalCons()" value="Submit"/><br>
+                        <label>Specific Energy:  </label><input type="number" id="num-area" disabled>
+        
+                        <script>
+                            function calcTotalCons() { 
+                                var a = document.getElementById("t1").value; 
+                                var b = document.getElementById("t2").value; 
+                                document.getElementById("num-area").value = a * b; 
+                            }  
+                        </script>
+        
+        
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column right">
+            <div class="buttons">
+                <div class="meterbox">
+                <label for="MeterNo.">Select Meter No.:</label>
+                <form method="post" action="/">
+                    <select  id="meterid" name="meter_id" type="text" placeholder ="Please select a meter">
+                        <option disabled selected>Select a meter</option>
+                        <option value="1">Meter 1</option>
+                        <option value="2">Meter 2</option>
+                        <option value="3">Meter 3</option>
+                        <option value="4">Meter 4</option>
+                    </select> 
+
+                    <input type="submit" value="Submit">
+                </form>
+                </div>
+                <div class="btns">
+                    <div class="downloadbtn">
+                        <a href="/getPlotCSV">
+                            Download
+                        </a>
+                    </div>
+                    <div class="exceldata">
+                        <a href="/getexcel">
+                            View Data
+                        </a>
+
+                    </div>
+                </div>
+            
+            
+            
+            
+            
+            </div>
+
+
+
+
+            <div class="graphs">
+            <div class="container-fluid">
+                <!-- Example row of columns -->
+                <div class="row">
+                    <div class="chart-wrapper" id="data-a">
+        
+                    </div>
+                </div>
+            </div>
+        <br>
+        <br>
+        <br>
+        
+            <div class="container-fluid">
+                <!-- Example row of columns -->
+                <div class="row">
+                    <div class="chart-wrapper" id="data-b">
+        
+                    </div>
+                </div>
+            </div>
+        <br>
+        <br>
+        <br>
+        
+            <div class="container-fluid">
+                <!-- Example row of columns -->
+                <div class="row">
+                    <div class="chart-wrapper" id="data-c">
+        
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="container-fluid">
+                <!-- Example row of columns -->
+                <div class="row">
+                    <div class="chart-wrapper" id="data-d">
+        
+                    </div>
+                </div>
+            </div>
+        <br>
+        <br>
+        <br>
+                    <div class="container-fluid">
+                <!-- Example row of columns -->
+                <div class="row">
+                    <div class="chart-wrapper" id="data-e">
+        
+                    </div>
+                </div>
+            </div>
+        <br>
+        <br>
+        <br>
+        <div class="container-fluid">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="chart-wrapper" id="data-f">
+    
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>   
+        <div class="container-fluid">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="chart-wrapper" id="data-g">
+
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br> 
+        <div class="container-fluid">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="chart-wrapper" id="data-h">
+
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>   
+        <div class="container-fluid">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="chart-wrapper" id="data-i">
+
+                </div>
+            </div>
+        </div> 
+        <br>
+        <br>
+        <br>   
+        <div class="container-fluid">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="chart-wrapper" id="data-loc">
+
+                </div>
+            </div>
+        </div> 
+            <script>
+                var charta;
+                var chartb;
+                var chartc;
+                var chartd;
+                var charte;
+                var chartf;
+                var chartg;
+                var charth;
+                var charti;
+                var chartj;
+                var chartloc;
+        
+                function requestData()
+                {
+                    // Ajax call to get the Data from Flask
+                    var requests = $.get('/data');
+        
+                    var tm = requests.done(function (result)
+                    {
+                        // a
+                        var seriesa = charta.series[0],
+                            shifta = seriesa.data.length > 500;
+        
+                        // b
+                        var seriesb = chartb.series[0],
+                            shiftb = seriesb.data.length > 500;
+        
+                        // c
+                        var seriesc = chartc.series[0],
+                            shiftc = seriesc.data.length > 500;
+ 
+                        // d
+                        var seriesd = chartd.series[0],
+                            shiftd = seriesd.data.length > 500;
+                            
+                        // e
+                        var seriese = charte.series[0],
+                            shifte = seriese.data.length > 500;
+
+                        // f
+                        var seriesf = chartf.series[0],
+                            shiftf = seriesf.data.length > 500;
+        
+                        // g
+                        var seriesg = chartg.series[0],
+                            shiftg = seriesg.data.length > 500;        
+                         // h
+                         var seriesh = charth.series[0],
+                            shifth = seriesh.data.length > 500;  
+                            
+                        // i
+                         var seriesi = charti.series[0],
+                            shifti = seriesi.data.length > 500;
+
+                        // j
+                         //var seriesj = chartj.series[0],
+                            //shiftj = seriesj.data.length > 500;
+        
+                        // Add the Point
+                        // Time a\
+                        var data1 = [];
+                        data1.push(result[0]);
+                        data1.push(result[1]);
+        
+        
+                        // Add the Point
+                        // Time b
+                        var data2 = [];
+                        data2.push(result[0]);
+                        data2.push(result[2]);
+        
+        
+                        //Add the Point
+                        // Time c
+                        var data3 = [];
+                        data3.push(result[0]);
+                        data3.push(result[3]);
+
+
+
+                        //Add the Point
+                        // Time d
+                        var data4 = [];
+                        data4.push(result[0]);
+                        data4.push(result[4]);
+
+                        //Add the Point
+                        // Time e
+                        var data5 = [];
+                        data5.push(result[0]);
+                        data5.push(result[5]);        
+        
+                        //Add the Point
+                        // Time f
+                        var data6 = [];
+                        data6.push(result[0]);
+                        data6.push(result[6]);  
+                        
+                        //Add the Point
+                        // Time g
+                        var data7 = [];
+                        data7.push(result[0]);
+                        data7.push(result[7]);
+
+                        //Add the Point
+                        // Time h
+                        var data8 = [];
+                        data8.push(result[0]);
+                        data8.push(result[8]);
+
+                                                //Add the Point
+                        // Time i
+                        var data9 = [];
+                        data9.push(result[0]);
+                        data9.push(result[9]);
+
+                        // Time j
+                        var data10 = [];
+                        data10.push(result[0]);
+                        data10.push(result[10]);
+
+                         // Time loc
+                         var dataloc = [];
+                        dataloc.push(result[0]);
+                        dataloc.push(result[11]);
+        
+                        charta.series[0].addPoint(data1, true, shifta);
+                        chartb.series[0].addPoint(data2, true, shiftb);
+                        chartc.series[0].addPoint(data3, true, shiftc);
+                        chartd.series[0].addPoint(data5, true, shiftd);
+                        charte.series[0].addPoint(data6, true, shifte);
+                        chartf.series[0].addPoint(data7, true, shiftf);
+                        chartg.series[0].addPoint(data8, true, shiftg);
+                        charth.series[0].addPoint(data9, true, shifth);
+                        charti.series[0].addPoint(data10, true, shifti);
+        
+
+                        
+                        $(".sensor1").text("");
+                        $(".sensor1").text("Voltage : " +  data1[1] );
+        
+                        $(".sensor2").text("");
+                        $(".sensor2").text("Current : " +  data2[1] );
+        
+                        $(".sensor3").text("");
+                        $(".sensor3").text("Frequency : " + data3[1] );
+                        
+                        $(".sensor5").text("");
+                        $(".sensor5").text("Total harmonic distortion: " +  data5[1]);
+
+                        $(".sensor6").text("");
+                        $(".sensor6").text("Apparent energy : " +  data6[1]);
+        
+                        $(".sensor7").text("");
+                        $(".sensor7").text("Power factor : " +  data7[1]);
+                        
+                        $(".sensor8").text("");
+                        $(".sensor8").text("Energy : " +  data8[1]);
+                        
+                        $(".sensor9").text("");
+                        $(".sensor9").text("Power : " +  data9[1]);
+
+                        $(".sensor4").text("");
+                        $(".sensor4").text("Apparent power : " +  data10[1]);
+
+                        $(".sensor10").text("");
+                        $(".sensor10").text("Meter ID : " +  data4[1]);
+
+                        $(".sensor11").text("");
+                        $(".sensor11").text("Meter location : " +  dataloc[1]);
+                        
+                        // call it again after one second
+                        setTimeout(requestData, 1000);
+        
+                    });
+                }
+        
+                $(document).ready(function()
+                {
+                    // --------------Chart 1 ----------------------------
+                    charta = new Highcharts.Chart({
+                        chart:
+                            {
+                            renderTo: 'data-a',
+                            defaultSeriesType: 'spline',
+                            events: {
+                                load: requestData
+                                    }
+                            },
+                        title:
+                            {
+                            text: 'voltage'
+                            },
+                        credits:{enabled:false},
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 150,
+                            maxZoom: 20 * 1000
+                                },
+                        yAxis: {
+                            minPadding: 0.2,
+                            maxPadding: 0.2,
+                            title: {
+                                text: 'voltage',
+                                margin: 80
+                                    }
+                                 },
+                        series: [{
+                            color : '#c23d23',
+                            lineColor: '#303030',
+                            name: 'voltage',
+                            data: []
+                        }]
+                    });
+                    // --------------Chart 1 Ends - -----------------
+        
+                    chartb = new Highcharts.Chart({
+                        chart:
+                            {
+                                renderTo: 'data-b',
+                                defaultSeriesType: 'spline',
+                                events: {
+                                    load: requestData
+                                }
+                            },
+                        title:
+                            {
+                                text: 'current'
+                            },
+                        credits:{enabled:false},
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 150,
+                            maxZoom: 20 * 1000
+                        },
+                        yAxis: {
+                            minPadding: 0.2,
+                            maxPadding: 0.2,
+                            title: {
+                                text: 'current',
+                                margin: 80
+                            }
+                        },
+                        series: [{
+                            lineColor: '#1d82b8',
+                            name: 'current',
+                            data: []
+                        }]
+                    });
+                    // --------------------Chart 2 Ends --------------------
+        
+                    // --------------Chart 3 ----------------------------
+                        chartc = new Highcharts.Chart({
+                        chart:
+                            {
+                            renderTo: 'data-c',
+                            defaultSeriesType: 'spline',
+                            events: {
+                                load: requestData
+                                    }
+                            },
+                        title:
+                            {
+                            text: 'frequency'
+                            },
+                        
+                        credits:{enabled:false},
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 150,
+                            maxZoom: 20 * 1000
+                                },
+                        yAxis: {
+                            minPadding: 0.2,
+                            maxPadding: 0.2,
+                            title: {
+                                text: 'frequency',
+                                margin: 80
+                                    }
+                                 },
+                        series: [{
+                            color : '#c23d23',
+                            lineColor: '#303030',
+                            name: 'frequency',
+                            data: []
+                        }]
+                    });
+                    // --------------Chart 3 Ends - ----------------
+
+                //-----------chart 4 ---------------------
+                                    // --------------Chart 1 ----------------------------
+                        chartd = new Highcharts.Chart({
+                        chart:
+                            {
+                            renderTo: 'data-d',
+                            defaultSeriesType: 'spline',
+                            events: {
+                                load: requestData
+                                    }
+                            },
+                        title:
+                            {
+                            text: 'total_harmonic_distortion'
+                            },
+                        credits:{enabled:false},
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 150,
+                            maxZoom: 20 * 1000
+                                },
+                        yAxis: {
+                            minPadding: 0.2,
+                            maxPadding: 0.2,
+                            title: {
+                                text: 'total_harmonic_distortion',
+                                margin: 80
+                                    }
+                                 },
+                        series: [{
+                            color : '#c23d23',
+                            lineColor: '#303030',
+                            name: 'total_harmonic_distortion',
+                            data: []
+                        }]
+                    });
+
+                    //---------chart 5 -------
+                                        // --------------Chart 1 ----------------------------
+                       charte = new Highcharts.Chart({
+                        chart:
+                            {
+                            renderTo: 'data-e',
+                            defaultSeriesType: 'spline',
+                            events: {
+                                load: requestData
+                                    }
+                            },
+                        title:
+                            {
+                            text: 'apparent_energy'
+                            },
+                        credits:{enabled:false},
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 150,
+                            maxZoom: 20 * 1000
+                                },
+                        yAxis: {
+                            minPadding: 0.2,
+                            maxPadding: 0.2,
+                            title: {
+                                text: 'apparent_energy',
+                                margin: 80
+                                    }
+                                 },
+                        series: [{
+                            color : '#c23d23',
+                            lineColor: '#303030',
+                            name: 'apparent_energy',
+                            data: []
+                        }]
+                    });
+                    //---------------------- chart 6---------
+                                        // --------------Chart 1 ----------------------------
+                        chartf = new Highcharts.Chart({
+                        chart:
+                            {
+                            renderTo: 'data-f',
+                            defaultSeriesType: 'spline',
+                            events: {
+                                load: requestData
+                                    }
+                            },
+                        title:
+                            {
+                            text: 'power_factor'
+                            },
+                        credits:{enabled:false},
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 150,
+                            maxZoom: 20 * 1000
+                                },
+                        yAxis: {
+                            minPadding: 0.2,
+                            maxPadding: 0.2,
+                            title: {
+                                text: 'power_factor',
+                                margin: 80
+                                    }
+                                 },
+                        series: [{
+                            color : '#c23d23',
+                            lineColor: '#303030',
+                            name: 'power_factor',
+                            data: []
+                        }]
+                    });
+                    //-------------------chart 7 --------
+                                        // --------------Chart 1 ----------------------------
+                       chartg = new Highcharts.Chart({
+                        chart:
+                            {
+                            renderTo: 'data-g',
+                            defaultSeriesType: 'spline',
+                            events: {
+                                load: requestData
+                                    }
+                            },
+                        title:
+                            {
+                            text: 'energy'
+                            },
+                        credits:{enabled:false},
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 150,
+                            maxZoom: 20 * 1000
+                                },
+                        yAxis: {
+                            minPadding: 0.2,
+                            maxPadding: 0.2,
+                            title: {
+                                text: 'energy',
+                                margin: 80
+                                    }
+                                 },
+                        series: [{
+                            color : '#c23d23',
+                            lineColor: '#303030',
+                            name: 'energy',
+                            data: []
+                        }]
+                    });
+                  //--------------------chart 8 ------------------
+                                      // --------------Chart 1 ----------------------------
+                        charth = new Highcharts.Chart({
+                        chart:
+                            {
+                            renderTo: 'data-h',
+                            defaultSeriesType: 'spline',
+                            events: {
+                                load: requestData
+                                    }
+                            },
+                        title:
+                            {
+                            text: 'power'
+                            },
+                        credits:{enabled:false},
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 150,
+                            maxZoom: 20 * 1000
+                                },
+                        yAxis: {
+                            minPadding: 0.2,
+                            maxPadding: 0.2,
+                            title: {
+                                text: 'power',
+                                margin: 80
+                                    }
+                                 },
+                        series: [{
+                            color : '#c23d23',
+                            lineColor: '#303030',
+                            name: 'power',
+                            data: []
+                        }]
+                    }); 
+                    //--------------chart 9 ---------
+                        charti = new Highcharts.Chart({
+                        chart:
+                            {
+                            renderTo: 'data-i',
+                            defaultSeriesType: 'spline',
+                            events: {
+                                load: requestData
+                                    }
+                            },
+                        title:
+                            {
+                            text: 'apparent_power'
+                            },
+                        credits:{enabled:false},
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 150,
+                            maxZoom: 20 * 1000
+                                },
+                        yAxis: {
+                            minPadding: 0.2,
+                            maxPadding: 0.2,
+                            title: {
+                                text: 'apparent_power',
+                                margin: 80
+                                    }
+                                 },
+                        series: [{
+                            color : '#c23d23',
+                            lineColor: '#303030',
+                            name: 'apparent_power',
+                            data: []
+                        }]
+                    }); 
+                });
+            </script>
+        
+            </div>
+        </div>
+    </div>
+    <div class="historic data">
+        {% include 'historic.html' %}
+    </div>
+
+<!-- Historic data 
+      <div class="historic">
+        <h1>Historic Data</h1>
+        <div class="form_pick">
+            <form method="post" action="/historical" style="margin:auto; display:flex; gap:5%;">
+        
+              <input class="daterange" type="text" name="daterange" value="Pick date timePicker" size="30"/>
+         
+                <script type="text/javascript">
+                $(function() {
+                  $('input[name="daterange"]').daterangepicker({
+                    timePicker: true,
+                    timePickerIncrement: 30,
+                    locale: {
+                    format: 'MM/DD/YYYY h:mm A'
+                    } 
+                  });
+                });
+                </script>
+              <div class="meterbox">
+                <label for="MeterNo.">Select Meter No. :</label>
+                  <select  id="meterid" name="meter_id" type="text" placeholder ="Please select a meter">
+                    <option disabled selected>Select a meter</option>
+                    <option value="1">Meter 1</option>
+                    <option value="2">Meter 2</option>
+                    <option value="3">Meter 3</option>
+                    <option value="4">Meter 4</option>
+                  </select>
+              </div>
+        
+              <input class="submit" type="submit" value="Submit">
+        
+            </form>
+        </div>
+        <div class="datatable">
+            <table style="width: 100%">
+                <tr>
+                  <th>meterID</th>
+                  <th>time_stamp</th>
+                  <th>Voltage</th>
+                  <th>Current</th>
+                  <th>Frequency</th>
+          
+                </tr>
+                {% for row in data %}
+                <tr>
+                  {% for cell in row %}
+                  <td>{{ cell }}</td>
+                  {% endfor %}
+                </tr>
+                {% endfor %}
+              </table>
+        </div>
+
+    </div>-->
+</body>
+</html>
+<style>
+body{
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+
+}
+#navbar{
+    display: flex;
+    position: relative;
+}
+#navbar::before{
+    content: "";
+    background-color: black;
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    opacity: 0.5;
+}
+#navbar ul li a:hover{
+    color:black;
+    background-color: white;
+}
+#navbar ul{
+    display: flex;  
+    flex: 1;
+    text-align: right;
+}
+#navbar ul li{
+    list-style: none;
+    font-size: x-large; 
+}
+#navbar ul li a{
+    color: white;
+    display: block;
+    padding: 10px 22px;
+    border-radius: 20px;
+    text-decoration: none;
+}
+.column {
+    float: left;
+    padding: 10px;
+}
+
+.home .left {
+    width: 20%;
+    background-color: rgb(0, 200, 255);
+    padding: 3%;
+    display: block;
+    height: max-content;
+}
+
+.home .right {
+    width: 80%;
+    padding-left: 5%;
+    height: 100vh;
+}
+.home{
+    background-color: bisque;
+    width: 100%;
+    margin: 0;
+    height: 100vh;
+}
+.chart-wrapper{
+    width: 90%;
+    height: 70%;
+    margin: 0%;
+}
+.datasets{
+    display: inline-block;
+
+}
+.sensor1{
+    font-size: medium;
+    height: 30px;
+}
+.sensor2{
+    font-size: medium;
+    height: 30px;
+}
+.sensor3{
+    font-size: medium;
+    height: 30px;
+}
+.sensor4{
+    font-size: medium;
+    height: 30px;
+}
+.sensor5{
+    font-size: medium;
+    height: 30px;
+}
+.sensor6{
+    font-size: medium;
+    height: 30px;
+}
+.sensor7{
+    font-size: medium;
+    height: 30px;
+}
+.sensor8{
+    font-size: medium;
+    height: 30px;
+}
+.sensor9{
+    font-size: medium;
+    height: 30px;
+}
+.sensor11{
+    font-size: medium;
+    height: 30px;
+    color:rgb(250, 238, 135)
+}
+
+.meterbox{
+    display: block;
+    height: 15vh;
+    padding-left: 2%;
+}
+.graphs{
+    height: 80vh;
+    overflow: auto;
+    overflow-y: scroll;
+}
+.meter_info{
+    background-color: aquamarine;
+}
+.row{
+    height: 100vh;
+}
+.container-fluid{
+    height: 70vh;
+}
+.buttons{
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-gap: 30%; 
+    padding: 4px;
+}
+.buttons a{
+	display: block;
+	background: #00A9D4;
+	color: #fff;
+	padding: 4px;
+	cursor: pointer;
+	text-decoration: none;
+	width: 200px;
+	text-align: center;
+	border-radius: 5px;
+	font-size: 20px;
+}
+.buttons a:hover {
+	background: #00729D;
+}
+.btns .exceldata{
+    margin-top: 3%;
+}
+.historic{
+    height: 300px;
+
+}
+.submit{
+    height: 30px;
+}
+.form_pick{
+    padding-left: 5%;
+    padding-top: 2%;
+    
+}
+.daterange{
+    height: 30px;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+</style>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+
+    <title>Flask App </title>
+
+
+    <!-- Bootstraps Java Scipts Links -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+    <!-- JQuery links  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <!--High CHART LIVE  -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+
+
+    	<style>
+	div.container-fluid-current {
+	margin-left: auto;
+  	margin-right: auto;
+	height: 500px;
+	width: 800px;
+	border : 1px solid #8E44AD
+	}
+	</style>
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+    	<input type="radio" id="tabfree" name="mytabs" checked="checked">
+    	<label for="tabfree">Voltage</label>
+	
+		
+        <!-- Example row of columns -->
+        
+		<div class="row">
+            <div class="container-fluid" id="data-container">
+            </div>
+        </div>
+    
+	<input type="radio" id="tabsilver" name="mytabs">
+    	<label for="tabsilver">Silver</label>
+    	<div class="tab">
+      	<h2>Silver</h2>
+      	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    	</div>
+	</div>
+
+    
+   <script>
+	
+	function requestData()
+        {
+            // Ajax call to get the Data from Flask
+            var requests = $.get('/data_voltage');
+
+
+            var tm = requests.done(function (result)
+            {
+                var series = chart.series[0],
+                    shift = series.data.length > 30;
+
+                // add the point
+                chart.series[0].addPoint(result, true, shift);
+
+                // call it again after x second
+                setTimeout(requestData, 2000);
+            });
+        }
+	$(document).ready(function() {
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'data-container',
+                    defaultSeriesType: 'spline',
+                    events: {
+                        load: requestData
+                    }
+                },
+                title: {
+                    text: 'Live voltage data'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Voltage',
+                        margin: 80
+                    }
+                },
+                series: [{
+                    name: 'voltage',
+                    data: []
+                }]
+            });
+        });
+    </script>
+
+
+<form action="/action_page.php">
+  <label for="cars">Choose a car:</label>
+  <select name="cars" id="cars">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="opel">Opel</option>
+    <option value="audi">Audi</option>
+  </select>
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+
+//<p>Click the "Submit" button and the form-data will be sent to a page on the 
+//server called "action_page.php".</p>
+
+
+</body>
+
+</html>
+
+<style>
+	body {
+		background: #ccc;
+}
+
+.container-fluid {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 25px;
+}
+.container-fluid .tab {
+    width: 100%;
+    padding: 20px;
+    background: #fff;
+    order: 1;
+    display: none;
+}
+.container-fluid .tab h2 {
+    font-size: 3em;
+}
+
+.container-fluid input[type='radio']:checked + label + .tab {
+    display: block;
+}
+
+.container-fluid input[type="radio"]:checked + label {
+    background: #fff;
+}
+
+.container-fluid label {
+    padding: 25px;
+    background: #e2e2e2;
+    font-weight: bold;
+}
+
+.container-fluid input[type="radio"] {
+    display: none;
+}
+
+</style>	

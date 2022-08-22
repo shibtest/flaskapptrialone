@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Title</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+  table, th, td {
+    border:1px solid black;
+  }
+  </style>
+<!--
+  <script type="text/javascript">
+    jQuery(document).ready(function(){				
+        var arr = [ "earth", "mars", "jupiter", "saturn", "venus" ];
+        var obj = { one:"earth", two:"mars", three:"jupiter", four:"saturn", five:"venus" };
+        
+        jQuery.each(arr, function(i, val) {
+          $("#arrData").append(i + " : " + val + "<br/>");		  
+        });
+        
+        jQuery.each(obj, function(i, val) {
+          $("#objData").append(i + " => " + val + "<br/>");
+        });
+    });
+  </script>-->
+</head>
+
+<body>
+<!-- <div id="arrData">
+    <strong>Array</strong><br/>
+    
+    </div>
+    
+    <div id="objData">
+    <strong>Object</strong><br/>-->
+    <table style="width: 100%">
+      <tr>
+        <th>meterID</th>
+        <th>time_stamp</th>
+        <th>Voltage</th>
+        <th>Current</th>
+        <th>Frequency</th>
+
+      </tr>
+      {% for row in data %}
+      <tr>
+        {% for cell in row %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+
+
+
+</body>
+</html>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>

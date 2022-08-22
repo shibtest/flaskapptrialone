@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+
+    <title>Flask App </title>
+
+
+    <!-- Bootstraps Java Scipts Links -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+    <!-- JQuery links  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <!--High CHART LIVE  -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+</head>
+  <body>
+        <div class="bokaro_all">
+          <input type="radio" id="tabvoltage" name="mytabs" checked="checked">
+          <label for="tabvoltage">Voltage</label>
+          <div class="tab">
+               <h2>Voltage</h2>
+               <div class="container-fluid" id="data-container"></div>
+          <script>
+            $(document).ready(function(){
+             var chart1 = new Highcharts.Chart({
+                  chart: {
+                      renderTo: 'data-container',
+                      defaultSeriesType: 'spline',
+                      events: {
+                          load: requestData
+                      }
+                  },
+                  title: {
+                      text: 'Live voltage data'
+                  },
+                  xAxis: {
+                      type: 'datetime',
+                      tickPixelInterval: 150,
+                      maxZoom: 20 * 1000
+                  },
+                  yAxis: {
+                      minPadding: 0.2,
+                      maxPadding: 0.2,
+                      title: {
+                          text: 'Voltage',
+                          margin: 80
+                      }
+                  },
+                  series: [{
+                      name: 'voltage',
+                      data: []
+                  }]
+              });
+          });
+        function requestData()
+                    {
+                         // Ajax call to get the Data from Flask
+                         var requests_voltage = $.get('/data_voltage');
+
+
+            var tm_voltage = requests_voltage.done(function (result)
+            {
+                var series = chart.series[0],
+                    shift = series.data.length > 5;
+
+                // add the point
+                chart.series[0].addPoint(result, true, shift);
+
+                // call it again after x second
+                setTimeout(requestData, 2000);
+            });
+          }          
+          </script>
+          </div> 
+          <input type="radio" id="tabcurrent" name="mytabs">
+          <label for="tabcurrent">Current</label>
+          <div class="tab">
+               <h2>Current</h2>
+               <div class="container-fluid-current" id="data-container-current"></div>                              
+         
+         <script>
+         $(document).ready(function(){ 
+           var chart2 = new Highcharts.Chart({
+                  chart: {
+                      renderTo: 'data-container-current',
+                      defaultSeriesType: 'spline',
+                      events: {
+                          load: requestData_current
+                      }
+                  },
+                  title: {
+                      text: 'Live current data'
+                  },
+                  xAxis: {
+                      type: 'datetime',
+                      tickPixelInterval: 150,
+                      maxZoom: 20 * 1000
+                  },
+                  yAxis: {
+                      minPadding: 0.2,
+                      maxPadding: 0.2,
+                      title: {
+                          text: 'Current',
+                          margin: 80
+                      }
+                  },
+                  series: [{
+                      name: 'current',
+                      data_c: []
+                  }]
+              });
+          });         
+           function requestData_current()
+                    {
+                         // Ajax call to get the Data from Flask
+                         var requests_current = $.get('/data_current');
+
+
+            var tm_current = requests_current.done(function (result)
+            {
+                var series = chart.series[0],
+                    shift = series.data.length > 30;
+
+                // add the point
+                chart.series[0].addPoint(result, true, shift);
+
+                // call it again after x second
+                setTimeout(requestData_current, 1000);
+            });
+         }       
+         </script>
+         </div>
+         <input type="radio" id="tabfreq" name="mytabs">
+         <label for="tabfreq">Frequency</label>
+         <div class="tab">
+              <h2>Frequency</h2>
+              <p>frequency graph</p>
+              </div> 
+          </div>  
+                 
+          
+  </body>
+</html>
+<style>
+  body {
+    background: #ccc;
+    font-family: 'Roboto', sans-serif;
+}
+.bokaro_all {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 25px;
+}
+.bokaro_all input[type="radio"] {
+    display: none;
+}
+.bokaro_all label {
+    padding: 25px;
+    background: #e2e2e2;
+    font-weight: bold;
+}
+
+.bokaro_all .tab {
+    width: 100%;
+    padding: 20px;
+    background: #fff;
+    order: 1;
+    display: none;
+}
+.bokaro_all .tab h2 {
+    font-size: 3em;
+}
+
+.bokaro_all input[type='radio']:checked + label + .tab {
+    display: block;
+}
+
+.bokaro_all input[type="radio"]:checked + label {
+    background: #fff;
+}
+</style>

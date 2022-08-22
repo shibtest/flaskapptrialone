@@ -1,0 +1,3 @@
+function reloadData() {
+var x_val = []
+var y_val = []

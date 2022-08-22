@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+
+    <title>Flask App </title>
+
+
+    <!-- Bootstraps Java Scipts Links -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+    <!-- JQuery links  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <!--High CHART LIVE  -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['sankey']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'From');
+        data.addColumn('string', 'To');
+        data.addColumn('number', 'Weight');
+        data.addRows([
+          [ 'A', 'X', 5 ],
+          [ 'A', 'Y', 7 ],
+          [ 'A', 'Z', 6 ],
+          [ 'B', 'X', 2 ],
+          [ 'B', 'Y', 9 ],
+          [ 'B', 'Z', 4 ]
+        ]);
+
+        // Sets chart options.
+        var options = {
+          width: 700,
+        };
+
+        // Instantiates and draws our chart, passing in some options.
+        var chart = new google.visualization.Sankey(document.getElementById('sankey_basic'));
+        chart.draw(data, options);
+      }
+    </script>
+
+
+
+
+</head>
+
+<body>
+
+	 <div class="bokaro_all">
+    <input type="radio" id="tabvoltage" name="mytabs" checked="checked">
+    <label for="tabvoltage">Voltage</label>
+    <div class="tab">
+      <h2>Voltage</h2>
+      <div class="container-fluid" id="data-container">
+            </div>                
+            <script>
+	                  function requestData()
+                    {
+                         // Ajax call to get the Data from Flask
+                         var requests = $.get('/data_voltage');
+
+
+            var tm_voltage = requests.done(function (result)
+            {
+                var series = chart.series[0],
+                    shift = series.data.length > 30;
+
+                // add the point
+                chart.series[0].addPoint(result, true, shift);
+
+                // call it again after x second
+                setTimeout(requestData, 5000);
+            });
+          }
+        // a curl brace "}" was here
+	      $(document).ready(function() {
+            chart_voltage = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'data-container',
+                    defaultSeriesType: 'spline',
+                    events: {
+                        load: requestData
+                    }
+                },
+                title: {
+                    text: 'Live voltage data'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Voltage',
+                        margin: 80
+                    }
+                },
+                series: [{
+                    name: 'voltage',
+                    data: []
+                }]
+            });
+        });
+    
+    </script> 
+    </div> 
+        <input type="radio" id="tabcurrent" name="mytabs">
+        <label for="tabcurrent">Current</label>
+        <div class="tab">
+        <h2>Current</h2>
+        <div class="container-fluid-current" id="data-container-current">
+        </div>       
+        
+         <script>
+	                  function requestData_current()
+                    {
+                         // Ajax call to get the Data from Flask
+                         var requests_current = $.get('/data_current');
+
+
+            var tm_current = requests_current.done(function (result)
+            {
+                var series = chart.series[0],
+                    shift = series.data.length > 30;
+
+                // add the point
+                chart.series[0].addPoint(result, true, shift);
+
+                // call it again after x second
+                setTimeout(requestData_current, 5000);
+            });
+         }
+        // a curl brace "}" was here
+	      $(document).ready(function() {
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'data-container-current',
+                    defaultSeriesType: 'spline',
+                    events: {
+                        load: requestData_current
+                    }
+                },
+                title: {
+                    text: 'Live current data'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Current',
+                        margin: 80
+                    }
+                },
+                series: [{
+                    name: 'current',
+                    data: []
+                }]
+            });
+        });
+    </script>
+    
+    </div>
+
+    <input type="radio" id="tabfreq" name="mytabs">
+    <label for="tabfreq">Frequency</label>
+    <div class="tab">
+      <h2>Frequency</h2>
+      <div class="container-fluid-frequency" id="data-container-frequency">
+        </div>
+      <script>
+	                  function requestData_frequency()
+                    {
+                         // Ajax call to get the Data from Flask
+                         var requests_frequency = $.get('/data_frequency');
+
+
+            var tm_frequency = requests_frequency.done(function (result)
+            {
+                var series = chart.series[0],
+                    shift = series.data.length > 30;
+
+                // add the point
+                chart.series[0].addPoint(result, true, shift);
+
+                // call it again after x second
+                setTimeout(requestData_frequency, 5000);
+            });
+         }
+        // a curl brace "}" was here
+	      $(document).ready(function() {
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'data-container-frequency',
+                    defaultSeriesType: 'spline',
+                    events: {
+                        load: requestData_frequency
+                    }
+                },
+                title: {
+                    text: 'Live frequency data'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'frequency',
+                        margin: 80
+                    }
+                },
+                series: [{
+                    name: 'frequency',
+                    data: []
+                }]
+            });
+        });
+    </script>
+      </div>
+
+     <input type="radio" id="sankey" name="mytabs">
+    <label for="sankey">Sankey</label>
+    <div class="tab">
+      <h2>Sankey</h2>
+      <div class="container-fluid-sankey" id="data-container-sankey">
+        </div>
+      <div id="sankey_basic" style="width: 500px; height: 300px;"></div>
+
+
+
+</div>
+
+        <select id="list" onchange="getSelectValue();">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+    <script>
+        
+        function getSelectValue()
+        {
+            var selectedValue = document.getElementById("list").value;
+            console.log(selectedValue);
+        }
+        getSelectValue();
+
+    </script>
+
+
+</body>
+</html>
+
+<style>
+  body {
+    background: #ccc;
+    font-family: 'Roboto', sans-serif;
+}
+.bokaro_all {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 25px;
+}
+.bokaro_all input[type="radio"] {
+    display: none;
+}
+.bokaro_all label {
+    padding: 25px;
+    background: #e2e2e2;
+    font-weight: bold;
+}
+
+.bokaro_all .tab {
+    width: 100%;
+    padding: 20px;
+    background: #fff;
+    order: 1;
+    display: none;
+}
+.bokaro_all .tab h2 {
+    font-size: 3em;
+}
+
+.bokaro_all input[type='radio']:checked + label + .tab {
+    display: block;
+}
+
+.bokaro_all input[type="radio"]:checked + label {
+    background: #fff;
+}
+</style>

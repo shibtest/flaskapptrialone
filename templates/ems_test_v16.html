@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+
+    <title>Flask App </title>
+
+    <!-- Bootstraps Java Scipts Links -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+    <!-- JQuery links  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <!--High CHART LIVE  -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+    <!--Gauge  -->
+    <script type="text/javascript" src="http://pubnub.github.io/eon/lib/eon.js"></script>
+
+
+</head>
+<body>
+    <nav id="navbar">
+        <div id="logo">
+            <img src="" alt="">
+        </div>
+        <ul>
+            <li class="item"><a href="a">Home</a></li>
+            <li class="item"><a href="a">Services</a></li>
+            <li class="item"><a href="a">Our Clients</a></li>
+            <li class="item"><a href="a">Contact Us</a></li>
+        </ul>
+    </nav>
+    <div class="row">
+        <div class="column left">
+            <div class="parameters">
+
+                <div class="sensordatas">
+        
+                    <div class="datasets">
+                        <h1 class="sensor1"> Sensor : </h1>
+                    </div>
+                    <br>
+        
+                    <div class="datasets">
+                        <h1 class="sensor2">Sensor :</h1>
+                    </div>
+                    <br>
+                    <div class="datasets">
+                        <h1 class="sensor3">Sensor :</h1>
+                    </div>
+                    <br>
+        
+        
+                </div>
+            </div>
+        </div>
+
+        <div class="column right">
+            <div class="meterbox">
+                <label for="MeterNo.">Choose Meter No.:</label>
+                <select name="MeterNo." id="MeterNo.">
+                    <option value="Meter1">Meter1</option>
+                    <option value="Meter2">Meter2</option>
+                    <option value="Meter3">Meter3</option>
+                    <option value="Meter4">Meter4</option>
+                 </select>
+            </div>
+
+
+            <div class="graphs">
+            <div class="container-fluid">
+                <!-- Example row of columns -->
+                <div class="row">
+                    <div class="chart-wrapper" id="data-a">
+        
+                    </div>
+                </div>
+            </div>
+        <br>
+        <br>
+        <br>
+        
+            <div class="container-fluid">
+                <!-- Example row of columns -->
+                <div class="row">
+                    <div class="chart-wrapper" id="data-b">
+        
+                    </div>
+                </div>
+            </div>
+        <br>
+        <br>
+        <br>
+        
+            <div class="container-fluid">
+                <!-- Example row of columns -->
+                <div class="row">
+                    <div class="chart-wrapper" id="data-c">
+        
+                    </div>
+                </div>
+            </div>
+        
+            <script>
+                var charta;
+                var chartb;
+                var chartc;
+        
+                function requestData()
+                {
+                    // Ajax call to get the Data from Flask
+                    var requests = $.get('/data');
+        
+                    var tm = requests.done(function (result)
+                    {
+                        // a
+                        var seriesa = charta.series[0],
+                            shifta = seriesa.data.length > 20;
+        
+                        // b
+                        var seriesb = chartb.series[0],
+                            shiftb = seriesb.data.length > 20;
+        
+                        // c
+                        var seriesc = chartc.series[0],
+                            shiftc = seriesc.data.length > 20;
+        
+        
+                            
+        
+                        // Add the Point
+                        // Time a\
+                        var data1 = [];
+                        data1.push(result[0]);
+                        data1.push(result[1]);
+        
+        
+                        // Add the Point
+                        // Time b
+                        var data2 = [];
+                        data2.push(result[0]);
+                        data2.push(result[2]);
+        
+        
+                        //Add the Point
+                        // Time c
+                        var data3 = [];
+                        data3.push(result[0]);
+                        data3.push(result[3]);
+        
+        
+        
+        
+                        charta.series[0].addPoint(data1, true, shifta);
+                        chartb.series[0].addPoint(data2, true, shiftb);
+                        chartc.series[0].addPoint(data3, true, shiftc);
+        
+                        $(".sensor1").text("");
+                        $(".sensor1").text("a : " +  Math.round(data1[1]) );
+        
+                        $(".sensor2").text("");
+                        $(".sensor2").text("b : " +  Math.round(data2[1]) );
+        
+                        $(".sensor3").text("");
+                        $(".sensor3").text("c : " +  Math.round(data3[1]) );
+        
+        
+                        // call it again after one second
+                        setTimeout(requestData, 6000);
+        
+                    });
+                }
+        
+                $(document).ready(function()
+                {
+                    // --------------Chart 1 ----------------------------
+                    charta = new Highcharts.Chart({
+                        chart:
+                            {
+                            renderTo: 'data-a',
+                            defaultSeriesType: 'spline',
+                            events: {
+                                load: requestData
+                                    }
+                            },
+                        title:
+                            {
+                            text: 'a'
+                            },
+                        credits:{enabled:false},
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 150,
+                            maxZoom: 20 * 1000
+                                },
+                        yAxis: {
+                            minPadding: 0.2,
+                            maxPadding: 0.2,
+                            title: {
+                                text: 'Value',
+                                margin: 80
+                                    }
+                                 },
+                        series: [{
+                            color : '#c23d23',
+                            lineColor: '#303030',
+                            name: 'a',
+                            data: []
+                        }]
+                    });
+                    // --------------Chart 1 Ends - -----------------
+        
+                    chartb = new Highcharts.Chart({
+                        chart:
+                            {
+                                renderTo: 'data-b',
+                                defaultSeriesType: 'spline',
+                                events: {
+                                    load: requestData
+                                }
+                            },
+                        title:
+                            {
+                                text: 'b'
+                            },
+                        credits:{enabled:false},
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 150,
+                            maxZoom: 20 * 1000
+                        },
+                        yAxis: {
+                            minPadding: 0.2,
+                            maxPadding: 0.2,
+                            title: {
+                                text: 'Value',
+                                margin: 80
+                            }
+                        },
+                        series: [{
+                            lineColor: '#1d82b8',
+                            name: 'b',
+                            data: []
+                        }]
+                    });
+                    // --------------------Chart 2 Ends --------------------
+        
+                    // --------------Chart 3 ----------------------------
+                        chartc = new Highcharts.Chart({
+                        chart:
+                            {
+                            renderTo: 'data-c',
+                            defaultSeriesType: 'spline',
+                            events: {
+                                load: requestData
+                                    }
+                            },
+                        title:
+                            {
+                            text: 'c'
+                            },
+                        
+                        credits:{enabled:false},
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 150,
+                            maxZoom: 20 * 1000
+                                },
+                        yAxis: {
+                            minPadding: 0.2,
+                            maxPadding: 0.2,
+                            title: {
+                                text: 'Value',
+                                margin: 80
+                                    }
+                                 },
+                        series: [{
+                            color : '#c23d23',
+                            lineColor: '#303030',
+                            name: 'c',
+                            data: []
+                        }]
+                    });
+                    // --------------Chart 3 Ends - ----------------
+                });
+            </script>
+        
+            </div>
+        </div>
+</body>
+</html>
+<style>
+#navbar{
+    display: flex;
+    position: relative;
+}
+#navbar::before{
+    content: "";
+    background-color: black;
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    opacity: 0.5;
+}
+#navbar ul li a:hover{
+    color:black;
+    background-color: white;
+}
+#navbar ul{
+    display: flex;  
+    flex: 1;
+    text-align: right;
+}
+#navbar ul li{
+    list-style: none;
+    font-size: x-large; 
+}
+#navbar ul li a{
+    color: white;
+    display: block;
+    padding: 10px 22px;
+    border-radius: 20px;
+    text-decoration: none;
+}
+* {
+    box-sizing: border-box;
+}
+.column {
+    float: left;
+    padding: 10px;
+}
+
+.left {
+    width: 30%;
+    background-color: rgb(0, 200, 255);
+    padding: 3%;
+    display: block;
+    height: max-content;
+}
+
+.right {
+    width: 70%;
+    padding-left: 5%;
+}
+.row{
+    background-color: bisque;
+    width: 100%;
+    margin: 0;
+}
+.chart-wrapper{
+    width: 90%;
+}
+.datasets{
+    display: inline-block;
+
+}
+.sensor1{
+    font-size: x-large;
+    height: 50px;
+}
+.sensor2{
+    font-size: x-large;
+    height: 50px;
+}
+.sensor3{
+    font-size: x-large;
+    height: 50px;
+}
+.meterbox{
+    display: block;
+    height: 50px;
+    padding-left: 2%;
+}
+
+
+</style>

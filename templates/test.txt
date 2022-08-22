@@ -1,0 +1,112 @@
+<canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+<script>
+    d1  = [0];
+    l   = 0; // The letter 'L' - NOT a one
+    obj = null;
+
+    // Pre-pad the array with null values
+    for (var i=0; i<600; ++i) {
+        d1.push(null);
+    }        
+
+    //
+    // This function creates and configures the chart
+    // and adds it to the window object. If the object
+    // is already on the window object, though, it uses
+    // that.
+    //
+    function getGraph(id, d1)
+    {
+        // After creating the chart, it's stored on the global
+        // window object
+        if (!window.obj) {
+            window.obj = new RGraph.Line({
+                id: id,
+                data: d1,
+                options: {
+                    marginRight: 50,
+                    backgroundColor: 'white',
+                    backgroundGridVlines: false,
+                    backgroundGridBorder: false,
+                    title: 'Bandwidth used',
+                    titleSize: 18,
+                    titleBold: true,
+                    titledsVpos: 0.5,
+                    yaxis: false,
+                    yaxisPosition: 'right',
+                    yaxisScaleMax: 50,
+                    yaxisLabelsCount: 2,
+                    yaxisScaleUnitsPost: 'MB/s',
+                    xaxisTickmarksCount: 0,
+                    xaxisTickmarksLength: 5,
+                    colors: ['#666'],
+                    linewidth: 0.5,
+                    filled: true,
+                    tickmarksStyle: null
+                }
+            });
+
+            // Create a gradient
+            var grad = window.obj.context.createLinearGradient(0,0,0,250);
+            grad.addColorStop(0, '#efefef');
+            grad.addColorStop(0.9, 'rgba(0,0,0,0)');
+
+            // Set the gradient as the charts fill color
+            window.obj.set('filledColors', [grad]);
+        }
+
+        return window.obj;
+    }
+
+
+
+
+
+
+    //
+    // The draw() function draws a single frame of the chart. It's
+    // called repeatedly to get the scrolling effect.
+    //
+    function draw ()
+    {
+        // Clear the canvas in preparation for drawing a new
+        // frame
+        RGraph.clear(document.getElementById("cvs", 'white'));
+
+
+        // Create the chart and draw it
+        var graph = getGraph('cvs', d1);
+        graph.draw();
+
+
+        // Generate a random value that's close to the
+        // last value of the current data
+        var index = d1.length - 1;
+        var r1 = RGraph.random(
+            RGraph.isNull(d1[index]) ? 26 : d1[index] - 2,
+            RGraph.isNull(d1[index]) ? 24 : d1[index] + 2
+        );
+        
+        // Bounds checking for the new value
+        r1 = Math.max(r1, 0);
+        r1 = Math.min(r1, 50);
+
+        // Add the new value on to the end of the data array
+        d1.push(r1);
+        
+        // Ensure the array is at most 600 values
+        while (d1.length > 600) {
+            d1 = RGraph.arrayShift(d1);
+        }
+
+        // Set the new data on the Line chart object
+        window.obj.original_data[0] = d1;
+        
+        // Call this function again in 50ms
+        setTimeout(drawGraph, 50);
+    }
+
+    // Call the draw function to set things going
+    draw();
+</script>

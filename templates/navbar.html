@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav id="navbar">
+        <div id="logo">
+            <img src="" alt="">
+        </div>
+        <ul>
+            <li class="home_page"><a href="{{ url_for('index') }}">Home</a></li>
+            <li class="item"><a href="{{ url_for('historic') }}">Historic Data</a></li>
+<!--        <li class="item"><a href="a">Our Clients</a></li>
+            <li class="item"><a href="a">Contact Us</a></li>                   -->
+        </ul>
+    </nav>
+</body>
+<style>
+body{   
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+#navbar{
+    display: flex;
+    position: relative;
+}
+#navbar::before{
+    content: "";
+    background-color: black;
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    opacity: 0.5;
+}
+#navbar ul li a:hover{
+    color:black;
+    background-color: white;
+}
+#navbar ul{
+    display: flex;  
+    flex: 1;
+    text-align: right;
+}
+#navbar ul li{
+    list-style: none;
+    font-size: x-large; 
+}
+#navbar ul li a{
+    color: white;
+    display: block;
+    padding: 10px 22px;
+    border-radius: 20px;
+    text-decoration: none;
+}
+</style>
+</html>

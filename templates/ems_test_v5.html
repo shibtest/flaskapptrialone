@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+
+    <title>Flask App </title>
+
+
+    <!-- Bootstraps Java Scipts Links -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+    <!-- JQuery links  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <!--High CHART LIVE  -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+
+    	<style>
+	div.container-fluid {
+	bottom: 100px;
+	right: 10px;
+	height: 400px;
+	width: 500px;
+	border : 1px solid #9FE2BF
+	}
+	</style>
+    	<style>
+	div.container-fluid-current {
+	bottom: 100px;
+	right: 10px;
+	height: 400px;
+	width: 500px;
+	border : 1px solid #8E44AD
+	}
+	</style>
+	</style>
+    	<style>
+	div.container-fluid-frequency {
+	bottom: 10px;
+	right: 0px;
+	height: 400px;
+	width: 500px;
+	border : 1px solid #F1C40F 
+	}
+	</style>
+	
+
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-container">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid-current">
+        <!-- Example row of columns -->
+        <div class="row-current">
+            <div class="container-fluid-current" id="data-container-current">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid-frequency">
+        <!-- Example row of columns -->
+        <div class="row-frequency">
+            <div class="container-fluid-frequency" id="data-container-frequency">
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        var chart;
+
+        function requestData()
+        {
+            // Ajax call to get the Data from Flask
+            var requests = $.get('/data');
+
+
+            var tm = requests.done(function (result)
+            {
+                var series = chart.series[0],
+                    shift = series.data.length > 20;
+
+                // add the point
+                chart.series[0].addPoint(result, true, shift);
+
+                // call it again after one second
+                setTimeout(requestData, 1000);
+            });
+        }
+
+        $(document).ready(function() {
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'data-container',
+                    defaultSeriesType: 'spline',
+                    events: {
+                        load: requestData
+                    }
+                },
+                title: {
+                    text: 'Live voltage data'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Voltage',
+                        margin: 80
+                    }
+                },
+                series: [{
+                    name: 'Voltage',
+                    data: []
+                }]
+            });
+
+        });
+    </script>
+
+    <script>
+        var chart1;
+
+        function requestData()
+        {
+            // Ajax call to get the Data from Flask
+            var requests = $.get('/current');
+
+
+            var tm = requests.done(function (result)
+            {
+                var series = chart1.series[0],
+                    shift = series.current.length > 20;
+
+                // add the point
+                chart1.series[0].addPoint(result, true, shift);
+
+                // call it again after one second
+                setTimeout(requestData, 1000);
+            });
+        }
+
+        $(document).ready(function() {
+            chart1 = new Highcharts.Chart({
+                chart1: {
+                    renderTo: 'data-container-current',
+                    defaultSeriesType: 'spline',
+                    events: {
+                        load: requestData
+                    }
+                },
+                title: {
+                    text: 'Live current data'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'current',
+                        margin: 80
+                    }
+                },
+                series: [{
+                    name: 'current',
+                    current: []
+                }]
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

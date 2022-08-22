@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+
+    <title>Flask App </title>
+
+    <!-- Bootstraps Java Scipts Links -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+    <!-- JQuery links  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <!--High CHART LIVE  -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+    <!--Gauge  -->
+    <script type="text/javascript" src="http://pubnub.github.io/eon/lib/eon.js"></script>
+
+
+</head>
+
+<body>
+
+    <div class="jumbotron">
+        <h1 class="text-center text-white">Welcome to Sensor Visualization </h1>
+    </div>
+    <br>
+    <br>
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor1"> Sensor : </h1>
+            </div>
+            <br>
+
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor2">Sensor :</h1>
+            </div>
+            <br>
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor3">Sensor :</h1>
+            </div>
+            <br>
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor4">Sensor :</h1>
+            </div>
+            <br>
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor5">Sensor :</h1>
+            </div>
+            <br>
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor6">Sensor :</h1>
+            </div>
+            <br>
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor6">Sensor :</h1>
+            </div>
+            <br>
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor7">Sensor :</h1>
+            </div>
+            <br>
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor8">Sensor :</h1>
+            </div>
+            <br>
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor9">Sensor :</h1>
+            </div>
+            <br>
+            <div class="col-5 jumbotron p-2 mx-1">
+                <h1 class="sensor10">Sensor :</h1>
+            </div>
+            <br>
+
+
+
+        </div>
+    </div>
+
+    <style>
+
+        .jumbotron{
+            widows: 150px;
+            height: 220px;
+            justify-content: center;
+        }
+
+        .row{
+            justify-content: center;
+        }
+
+
+    </style>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-a">
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-b">
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-c">
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-d">
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-e">
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-f">
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-g">
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-h">
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-i">
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-j">
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        var charta;
+        var chartb;
+        var chartc;
+        var chartd;
+        var charte;
+        var chartf;
+        var chartg;
+        var charth;
+        var charti;
+        var chartj;
+
+        function requestData()
+        {
+            // Ajax call to get the Data from Flask
+            var requests = $.get('/data');
+
+            var tm = requests.done(function (result)
+            {
+                // a
+                var seriesa = charta.series[0],
+                    shifta = seriesa.data.length > 20;
+
+                // b
+                var seriesb = chartb.series[0],
+                    shiftb = seriesb.data.length > 20;
+
+                // c
+                var seriesc = chartc.series[0],
+                    shiftc = seriesc.data.length > 20;
+
+                // d
+                var seriesd = chartd.series[0],
+                    shiftd = seriesd.data.length > 20;
+
+                // e
+                var seriese = charte.series[0],
+                    shifte = seriese.data.length > 20;
+
+                // f
+                var seriesf = chartf.series[0],
+                    shiftf = seriesf.data.length > 20;
+
+                // g
+                var seriesg = chartg.series[0],
+                    shiftg = seriesg.data.length > 20;
+
+                // h
+                var seriesh = charth.series[0],
+                    shifth = seriesh.data.length > 20;
+
+                // i
+                var seriesi = charti.series[0],
+                    shifti = seriesi.data.length > 20;
+
+                // j
+                var seriesj = chartj.series[0],
+                    shiftj = seriesj.data.length > 20;
+
+                    
+
+                // Add the Point
+                // Time a\
+                var data1 = [];
+                data1.push(result[0]);
+                data1.push(result[1]);
+
+
+                // Add the Point
+                // Time b
+                var data2 = [];
+                data2.push(result[0]);
+                data2.push(result[2]);
+
+
+                //Add the Point
+                // Time c
+                var data3 = [];
+                data3.push(result[0]);
+                data3.push(result[3]);
+
+
+                //Add the Point
+                // Time d
+                var data4 = [];
+                data4.push(result[0]);
+                data4.push(result[4]);
+
+
+                //Add the Point
+                // Time e
+                var data5 = [];
+                data5.push(result[0]);
+                data5.push(result[5]);
+
+                //Add the Point
+                // Time f
+                var data6 = [];
+                data6.push(result[0]);
+                data6.push(result[6]);
+
+
+                //Add the Point
+                // Time g
+                var data7 = [];
+                data7.push(result[0]);
+                data7.push(result[7]);
+
+                //Add the Point
+                // Time h
+                var data8 = [];
+                data8.push(result[0]);
+                data8.push(result[8]);
+
+
+                //Add the Point
+                // Time i
+                var data3 = [];
+                data9.push(result[0]);
+                data9.push(result[9]);
+
+
+                //Add the Point
+                // Time j
+                var data10 = [];
+                data10.push(result[0]);
+                data10.push(result[10]);
+
+
+                charta.series[0].addPoint(data1, true, shifta);
+                chartb.series[0].addPoint(data2, true, shiftb);
+                chartc.series[0].addPoint(data3, true, shiftc);
+                chartd.series[0].addPoint(data4, true, shiftd);
+                charte.series[0].addPoint(data5, true, shifte);
+                chartf.series[0].addPoint(data6, true, shiftf);
+                chartg.series[0].addPoint(data7, true, shiftg);
+                charth.series[0].addPoint(data8, true, shifth);
+                charti.series[0].addPoint(data9, true, shifti);
+                chartj.series[0].addPoint(data10, true, shiftj);
+                $(".sensor1").text("");
+                $(".sensor1").text("a : " +  Math.round(data1[1]) );
+
+                $(".sensor2").text("");
+                $(".sensor2").text("b : " +  Math.round(data2[1]) );
+
+                $(".sensor3").text("");
+                $(".sensor3").text("c : " +  Math.round(data3[1]) );
+
+                $(".sensor4").text("");
+                $(".sensor4").text("d : " +  Math.round(data4[1]) );
+
+                $(".sensor5").text("");
+                $(".sensor5").text("e : " +  Math.round(data5[1]) );
+
+                $(".sensor6").text("");
+                $(".sensor6").text("f : " +  Math.round(data6[1]) );
+
+                $(".sensor7").text("");
+                $(".sensor7").text("g : " +  Math.round(data7[1]) );
+
+                $(".sensor8").text("");
+                $(".sensor8").text("h : " +  Math.round(data8[1]) );
+
+                $(".sensor9").text("");
+                $(".sensor9").text("i : " +  Math.round(data9[1]) );
+
+                $(".sensor10").text("");
+                $(".sensor10").text("j : " +  Math.round(data10[1]) );
+
+                // call it again after one second
+                setTimeout(requestData, 2000);
+
+            });
+        }
+
+        $(document).ready(function()
+        {
+            // --------------Chart 1 ----------------------------
+            charta = new Highcharts.Chart({
+                chart:
+                    {
+                    renderTo: 'data-a',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                            }
+                    },
+                title:
+                    {
+                    text: 'a'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                        },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Value',
+                        margin: 80
+                            }
+                         },
+                series: [{
+                    color : '#c23d23',
+                    lineColor: '#303030',
+                    name: 'a',
+                    data: []
+                }]
+            });
+            // --------------Chart 1 Ends - -----------------
+
+            chartb = new Highcharts.Chart({
+                chart:
+                    {
+                        renderTo: 'data-b',
+                        defaultSeriesType: 'area',
+                        events: {
+                            load: requestData
+                        }
+                    },
+                title:
+                    {
+                        text: 'b'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Value',
+                        margin: 80
+                    }
+                },
+                series: [{
+                    lineColor: '#1d82b8',
+                    name: 'b',
+                    data: []
+                }]
+            });
+            // --------------------Chart 2 Ends --------------------
+
+            // --------------Chart 3 ----------------------------
+                chartc = new Highcharts.Chart({
+                chart:
+                    {
+                    renderTo: 'data-c',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                            }
+                    },
+                title:
+                    {
+                    text: 'c'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                        },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Value',
+                        margin: 80
+                            }
+                         },
+                series: [{
+                    color : '#c23d23',
+                    lineColor: '#303030',
+                    name: 'c',
+                    data: []
+                }]
+            });
+            // --------------Chart 3 Ends - -----------------
+            // --------------Chart 4 ----------------------------
+                charta = new Highcharts.Chart({
+                chart:
+                    {
+                    renderTo: 'data-d',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                            }
+                    },
+                title:
+                    {
+                    text: 'd'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                        },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Value',
+                        margin: 80
+                            }
+                         },
+                series: [{
+                    color : '#c23d23',
+                    lineColor: '#303030',
+                    name: 'd',
+                    data: []
+                }]
+            });
+            // --------------Chart 4 Ends - -----------------
+            // --------------Chart 5 ----------------------------
+                charte = new Highcharts.Chart({
+                chart:
+                    {
+                    renderTo: 'data-e',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                            }
+                    },
+                title:
+                    {
+                    text: 'e'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                        },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Value',
+                        margin: 80
+                            }
+                         },
+                series: [{
+                    color : '#c23d23',
+                    lineColor: '#303030',
+                    name: 'e',
+                    data: []
+                }]
+            });
+            // --------------Chart 5 Ends - -----------------
+            // --------------Chart 6 ----------------------------
+                chartf = new Highcharts.Chart({
+                chart:
+                    {
+                    renderTo: 'data-f',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                            }
+                    },
+                title:
+                    {
+                    text: 'f'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                        },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Value',
+                        margin: 80
+                            }
+                         },
+                series: [{
+                    color : '#c23d23',
+                    lineColor: '#303030',
+                    name: 'f',
+                    data: []
+                }]
+            });
+            // --------------Chart 6 Ends - -----------------
+            // --------------Chart 7 ----------------------------
+                chartg = new Highcharts.Chart({
+                chart:
+                    {
+                    renderTo: 'data-g',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                            }
+                    },
+                title:
+                    {
+                    text: 'g'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                        },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Value',
+                        margin: 80
+                            }
+                         },
+                series: [{
+                    color : '#c23d23',
+                    lineColor: '#303030',
+                    name: 'g',
+                    data: []
+                }]
+            });
+            // --------------Chart 7 Ends - -----------------
+            // --------------Chart 8 ----------------------------
+                charta = new Highcharts.Chart({
+                chart:
+                    {
+                    renderTo: 'data-h',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                            }
+                    },
+                title:
+                    {
+                    text: 'h'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                        },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Value',
+                        margin: 80
+                            }
+                         },
+                series: [{
+                    color : '#c23d23',
+                    lineColor: '#303030',
+                    name: 'h',
+                    data: []
+                }]
+            });
+            // --------------Chart 8 Ends - -----------------
+                // --------------Chart 9 ----------------------------
+                charti = new Highcharts.Chart({
+                chart:
+                    {
+                    renderTo: 'data-i',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                            }
+                    },
+                title:
+                    {
+                    text: 'i'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                        },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Value',
+                        margin: 80
+                            }
+                         },
+                series: [{
+                    color : '#c23d23',
+                    lineColor: '#303030',
+                    name: 'i',
+                    data: []
+                }]
+            });
+            // --------------Chart 9 Ends - -----------------
+            // --------------Chart 10 ----------------------------
+                chartj = new Highcharts.Chart({
+                chart:
+                    {
+                    renderTo: 'data-j',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                            }
+                    },
+                title:
+                    {
+                    text: 'j'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                        },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'Value',
+                        margin: 80
+                            }
+                         },
+                series: [{
+                    color : '#c23d23',
+                    lineColor: '#303030',
+                    name: 'j',
+                    data: []
+                }]
+            });
+            // --------------Chart 10 Ends - -----------------
+
+        });
+    </script>
+
+
+
+<script>
+ class Image{
+
+ constructor(imgUrl, size)
+ {
+ this.imgUrl=imgUrl;
+ this.size=size;
+ }
+
+ backgroundImage()
+ {
+ console.log("inside function ")
+ // Select the Image
+ var img = document.querySelector(".jumbotron");
+
+ // create Css Text
+ var text = "margin:auto;"+
+ "background-image: url("+this.imgUrl+");" +
+ "background-size:cover;"+
+ "opacity:1;"+
+ "background-blend-mode: darken;"+
+ "height: "+ this.size + "vh;";
+
+ img.style.cssText = text;
+ }
+
+ centerTitle()
+ {
+ /*
+ Center the Title
+ */
+ var t1 = document.querySelector("#title");
+ t1.classList.add("text-white");
+ t1.classList.add("text-center");
+ t1.classList.add("display-3");
+ }
+ }
+ const imgUrl = 'https://media.giphy.com/media/fXyfpPeT5y9iTbagj5/giphy.gif'
+ const size = "25";
+ var obj = new Image(imgUrl, size);
+ obj.backgroundImage();
+ obj.centerTitle();
+ </script>
+</body>
+
+
+</html>
